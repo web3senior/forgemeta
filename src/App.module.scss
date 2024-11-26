@@ -1,0 +1,44 @@
+.page {
+  button {
+    &:active {
+      transform: scale(0.9);
+    }
+  }
+}
+
+.preview {
+  height: 1080px;
+  width: 1080px;
+  border: 1px solid palegoldenrod;
+  *zoom: 0.9;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: stretch;
+
+  button {
+    flex: 100%;
+    font-size: 11px;
+  }
+}
