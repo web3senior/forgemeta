@@ -121,7 +121,7 @@ function App() {
   }
 
   const autoGenerate = async () => {
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 20; i++) {
       // Generate
       await Promise.all([generate(`background`), generate(`skin`), generate(`eyes`), generate(`tattoo`), generate(`clothes`), generate(`headgear`)]).then((values) => {
         console.log(values)
@@ -170,7 +170,7 @@ function App() {
           </svg>
         </div>
         <div className={`${styles.actions}`}>
-          {/* <button onClick={() => autoGenerate()}>Auto Generate</button> */}
+         <button onClick={() => autoGenerate()}>Auto Generate(20)</button>
           <button onClick={() => generateOne()}>Generate</button>
           <button onClick={() => download()}>Download</button>
           {/* <button onClick={() => upload()}>Upload</button> */}
