@@ -21,7 +21,7 @@ function App() {
   const headgearGroupRef = useRef()
   const GATEWAY = `https://ipfs.io/ipfs/`
   const CID = `QmYqTp8m3BL1zzP72Y45CbEx5JMTMcVxve4n2pSQc67b6Q`
-  const BASE_URL = `${GATEWAY}${CID}/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or
+  const BASE_URL = `http://localhost/luxgenerator/src/assets/pepito-pfp/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or
 
   const weightedRandom = (items) => {
     const totalWeight = items.reduce((acc, item) => acc + item.weight, 0)
@@ -54,7 +54,6 @@ function App() {
   }
 
   const Log = (msg) => {
-    toast.success(`${msg}`)
     document.querySelector(`#log`).innerHTML += `<p>${msg}</p>`
   }
 
@@ -64,7 +63,7 @@ function App() {
     // Clear the board
     // SVG.current.innerHTML = ''
 
-   return await fetch(`${BASE_URL}${trait}/${weightedRandom(Metadata[`${trait}`])}.png`)
+    return await fetch(`${BASE_URL}${trait}/${weightedRandom(Metadata[`${trait}`])}.png`)
       .then((response) => response.blob())
       .then((blob) => {
         const reader = new FileReader()
@@ -105,6 +104,10 @@ function App() {
               headgearGroupRef.current.innerHTML = ''
               headgearGroupRef.current.appendChild(image)
               break
+            case `accessory`:
+              accessoryGroupRef.current.innerHTML = ''
+              accessoryGroupRef.current.appendChild(image)
+              break
             default:
               break
           }
@@ -119,12 +122,13 @@ function App() {
     generate(`tattoo`)
     generate(`clothes`)
     generate(`headgear`)
+    generate(`accessory`)
   }
 
   const autoGenerate = async () => {
     for (let i = 0; i < 20; i++) {
       // Generate
-      await Promise.all([generate(`background`), generate(`skin`), generate(`eyes`), generate(`tattoo`), generate(`clothes`), generate(`headgear`)]).then((values) => {
+      await Promise.all([generate(`background`), generate(`skin`), generate(`eyes`), generate(`tattoo`), generate(`clothes`), generate(`headgear`), generate(`accessory`)]).then((values) => {
         console.log(values)
         download()
       })
@@ -168,20 +172,17 @@ function App() {
             <g ref={tattooGroupRef} name={`tattooGroup`} />
             <g ref={clothesGroupRef} name={`clothesGroup`} />
             <g ref={headgearGroupRef} name={`headgearGroup`} />
+            <g ref={headgearGroupRef} name={`accessoryGroup`} />
           </svg>
         </div>
         <div className={`${styles.actions}`}>
-         <button onClick={() => autoGenerate()}>Auto Generate(20)</button>
+          <button onClick={() => autoGenerate()}>Auto Generate(20)</button>
           <button onClick={() => generateOne()}>Generate</button>
           <button onClick={() => download()}>Download</button>
           {/* <button onClick={() => upload()}>Upload</button> */}
         </div>
-        <div id={`log`} className={`${styles.log}`}>
-
-</div>
-
+        <div id={`log`} className={`${styles.log}`}></div>
       </div>
-
     </>
   )
 }
