@@ -19,9 +19,10 @@ function App() {
   const tattooGroupRef = useRef()
   const clothesGroupRef = useRef()
   const headgearGroupRef = useRef()
+  const accessoryGroupRef = useRef()
   const GATEWAY = `https://ipfs.io/ipfs/`
-  const CID = `QmYqTp8m3BL1zzP72Y45CbEx5JMTMcVxve4n2pSQc67b6Q`
-  const BASE_URL = `http://localhost/luxgenerator/src/assets/pepito-pfp/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or
+  const CID = `QmX5vHaRpABCKCC6fs94jiL51GfNzfNMzPQRRziGcnFPBX`
+  const BASE_URL = `${GATEWAY}${CID}/` // `http://localhost/luxgenerator/src/assets/pepito-pfp/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or
 
   const weightedRandom = (items) => {
     const totalWeight = items.reduce((acc, item) => acc + item.weight, 0)
@@ -126,7 +127,7 @@ function App() {
   }
 
   const autoGenerate = async () => {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 50; i++) {
       // Generate
       await Promise.all([generate(`background`), generate(`skin`), generate(`eyes`), generate(`tattoo`), generate(`clothes`), generate(`headgear`), generate(`accessory`)]).then((values) => {
         console.log(values)
@@ -172,7 +173,7 @@ function App() {
             <g ref={tattooGroupRef} name={`tattooGroup`} />
             <g ref={clothesGroupRef} name={`clothesGroup`} />
             <g ref={headgearGroupRef} name={`headgearGroup`} />
-            <g ref={headgearGroupRef} name={`accessoryGroup`} />
+            <g ref={accessoryGroupRef} name={`accessoryGroup`} />
           </svg>
         </div>
         <div className={`${styles.actions}`}>
