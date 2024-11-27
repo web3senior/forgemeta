@@ -21,7 +21,7 @@ function App() {
   const headgearGroupRef = useRef()
   const accessoryGroupRef = useRef()
   const GATEWAY = `https://ipfs.io/ipfs/`
-  const CID = `QmX5vHaRpABCKCC6fs94jiL51GfNzfNMzPQRRziGcnFPBX`
+  const CID = `QmNxsJJn86g6hnHmuDb6ZWB9x8qFKa6VCz6nHyS2iDRZRj`
   const BASE_URL = `${GATEWAY}${CID}/` // `http://localhost/luxgenerator/src/assets/pepito-pfp/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or
 
   const weightedRandom = (items) => {
