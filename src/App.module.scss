@@ -1,4 +1,7 @@
 .page {
+  display: flex;
+  flex-direction: column;
+  
   button {
     &:active {
       transform: scale(0.9);
@@ -54,3 +57,14 @@
   }
 }
 
+.log {
+  margin-top: 1rem;
+  background-color: #131313;
+  height: 200px;
+  width: 100%;
+  color: greenyellow;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse;
+  line-height: .7;
+}

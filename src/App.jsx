@@ -11,7 +11,7 @@ const pinata = new PinataSDK({
 })
 
 function App() {
-  const [showLog, setShowLog] = useState(false)
+  const [showLog, setShowLog] = useState(true)
   const SVG = useRef()
   const backgroundGroupRef = useRef()
   const skinGroupRef = useRef()
@@ -55,6 +55,7 @@ function App() {
 
   const Log = (msg) => {
     toast.success(`${msg}`)
+    document.querySelector(`#log`).innerHTML += `<p>${msg}</p>`
   }
 
   const generate = async (trait) => {
@@ -175,7 +176,12 @@ function App() {
           <button onClick={() => download()}>Download</button>
           {/* <button onClick={() => upload()}>Upload</button> */}
         </div>
+        <div id={`log`} className={`${styles.log}`}>
+
+</div>
+
       </div>
+
     </>
   )
 }
