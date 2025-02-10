@@ -1,5 +1,7 @@
 {
   "base": [
+    { "name": "none", "weight": 0 },
+
     { "name": "blue", "weight": 100 },
     { "name": "brown", "weight": 100 },
     { "name": "green", "weight": 100 },
@@ -22,6 +24,8 @@
     { "name": "tatted", "weight": 5 }
   ],
   "background": [
+    { "name": "none", "weight": 0 },
+
     { "name": "blue", "weight": 100 },
     { "name": "gray", "weight": 100 },
     { "name": "grey", "weight": 100 },
@@ -41,6 +45,8 @@
     { "name": "peach", "weight": 10 }
   ],
   "eyes": [
+    { "name": "none", "weight": 0 },
+
     { "name": "bloodshot", "weight": 100 },
     { "name": "dragon", "weight": 100 },
     { "name": "ski_goggles", "weight": 100 },
@@ -60,6 +66,8 @@
     { "name": "vr_goggles", "weight": 7 }
   ],
   "mouth": [
+    { "name": "none", "weight": 0 },
+
     { "name": "beard", "weight": 100 },
     { "name": "bubblegum", "weight": 100 },
     { "name": "closed", "weight": 100 },
@@ -74,12 +82,14 @@
     { "name": "fire", "weight": 20 },
     { "name": "gold_grill", "weight": 20 },
 
-    { "name": "Rose", "weight": 10 },
+    { "name": "rose", "weight": 10 },
     { "name": "diamond_grill", "weight": 10 },
     { "name": "pipe", "weight": 10 },
     { "name": "rainbow_grill", "weight": 10 }
   ],
   "head": [
+    { "name": "none", "weight": 30 },
+
     { "name": "arrow", "weight": 70 },
     { "name": "bandana", "weight": 70 },
     { "name": "beanie", "weight": 70 },
@@ -88,7 +98,7 @@
     { "name": "festive", "weight": 70 },
     { "name": "fox_mask", "weight": 70 },
     { "name": "headphones", "weight": 70 },
-    { "name": "japanese_bandana  ", "weight": 70 },
+    { "name": "japanese_bandana", "weight": 70 },
     { "name": "pilot", "weight": 70 },
     { "name": "prisoner", "weight": 70 },
     { "name": "rasta", "weight": 70 },
@@ -118,6 +128,8 @@
     { "name": "pirate", "weight": 9 }
   ],
   "clothing": [
+    { "name": "none", "weight": 10 },
+
     { "name": "aqua_hoodie", "weight": 90 },
     { "name": "bomber_jacket", "weight": 90 },
     { "name": "bulletproof_vest", "weight": 90 },
@@ -182,6 +194,10 @@
     { "name": "wizerd", "weight": 10 }
   ],
   "back": [
+    { "name": "none", "weight": 65 },
+
+    { "name": "none", "weight": 80 },
+
     { "name": "medieval_sword", "weight": 30 },
     { "name": "rpg", "weight": 30 },
     { "name": "shield", "weight": 30 },
