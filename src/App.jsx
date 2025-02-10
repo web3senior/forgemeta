@@ -131,7 +131,8 @@ function App() {
   }
 
   const autoGenerate = async () => {
-    for (let i = 0; i < 50; i++) {
+    const loop_count = document.querySelector(`[name="autogenerate"]`).value
+    for (let i = 0; i < loop_count; i++) {
       // Generate
       await Promise.all([generate(`base`), generate(`background`), generate(`eyes`), generate(`mouth`), generate(`head`), generate(`clothing`), generate(`back`)]).then((values) => {
         console.log(values)
@@ -260,8 +261,9 @@ function App() {
           </svg>
         </div>
         <div className={`${styles.actions}`}>
-          <button onClick={() => autoGenerate()}>Auto Generate(20)</button>
-          <button onClick={() => generateOne()}>Generate</button>
+        <input type="text" name="autogenerate" id="" placeholder='Auto Generate Number'/>
+          <button onClick={() => autoGenerate()}>Auto Generate</button>
+          <button style={{marginTop:`1rem`}} onClick={() => generateOne()}>Generate</button>
           <button onClick={() => download()}>Download</button>
           <button onClick={() => upload()}>Upload</button>
           <button onClick={(e) => setData(e)}>setLSP8metadata</button>
