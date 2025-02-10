@@ -3,6 +3,8 @@ import toast, { Toaster } from 'react-hot-toast'
 import Metadata from './assets/metadata.json'
 import { PinataSDK } from 'pinata'
 import html2canvas from 'html2canvas'
+import ABI from './assets/abi.json'
+import Web3 from 'web3'
 import styles from './App.module.scss'
 
 const pinata = new PinataSDK({
@@ -13,18 +15,19 @@ const pinata = new PinataSDK({
 function App() {
   const [showLog, setShowLog] = useState(true)
   const SVG = useRef()
+  const baseGroupRef = useRef()
   const backgroundGroupRef = useRef()
-  const skinGroupRef = useRef()
   const eyesGroupRef = useRef()
-  const tattooGroupRef = useRef()
-  const clothesGroupRef = useRef()
-  const headgearGroupRef = useRef()
-  const accessoryGroupRef = useRef()
+  const mouthGroupRef = useRef()
+  const headGroupRef = useRef()
+  const clothingGroupRef = useRef()
+  const backGroupRef = useRef()
   const GATEWAY = `https://ipfs.io/ipfs/`
-  const CID = `QmNQchDLDVnf3DsP3VUPth37cR7ZFsAmFmmMU3A9BxhW8b`
+  const CID = `bafybeiehzmsgsvhinlyspxqyotzg6zyvs3xejsgxsbfkfnr3r2fniunoli`
   const BASE_URL = `${GATEWAY}${CID}/` // `http://localhost/luxgenerator/src/assets/pepito-pfp/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or
 
   const weightedRandom = (items) => {
+    console.log(items)
     const totalWeight = items.reduce((acc, item) => acc + item.weight, 0)
     const randomNum = Math.random() * totalWeight
 
@@ -63,7 +66,7 @@ function App() {
 
     // Clear the board
     // SVG.current.innerHTML = ''
-
+    console.log(`${BASE_URL}${trait}/${weightedRandom(Metadata[`${trait}`])}.png`)
     return await fetch(`${BASE_URL}${trait}/${weightedRandom(Metadata[`${trait}`])}.png`)
       .then((response) => response.blob())
       .then((blob) => {
@@ -81,33 +84,33 @@ function App() {
 
           // Add to the group
           switch (trait) {
+            case `base`:
+              baseGroupRef.current.innerHTML = ''
+              baseGroupRef.current.appendChild(image)
+              break
             case `background`:
               backgroundGroupRef.current.innerHTML = ''
               backgroundGroupRef.current.appendChild(image)
-              break
-            case `skin`:
-              skinGroupRef.current.innerHTML = ''
-              skinGroupRef.current.appendChild(image)
               break
             case `eyes`:
               eyesGroupRef.current.innerHTML = ''
               eyesGroupRef.current.appendChild(image)
               break
-            case `tattoo`:
-              tattooGroupRef.current.innerHTML = ''
-              tattooGroupRef.current.appendChild(image)
+            case `mouth`:
+              mouthGroupRef.current.innerHTML = ''
+              mouthGroupRef.current.appendChild(image)
               break
-            case `clothes`:
-              clothesGroupRef.current.innerHTML = ''
-              clothesGroupRef.current.appendChild(image)
+            case `head`:
+              headGroupRef.current.innerHTML = ''
+              headGroupRef.current.appendChild(image)
               break
-            case `headgear`:
-              headgearGroupRef.current.innerHTML = ''
-              headgearGroupRef.current.appendChild(image)
+            case `clothing`:
+              clothingGroupRef.current.innerHTML = ''
+              clothingGroupRef.current.appendChild(image)
               break
-            case `accessory`:
-              accessoryGroupRef.current.innerHTML = ''
-              accessoryGroupRef.current.appendChild(image)
+            case `back`:
+              backGroupRef.current.innerHTML = ''
+              backGroupRef.current.appendChild(image)
               break
             default:
               break
@@ -117,19 +120,19 @@ function App() {
   }
 
   const generateOne = async () => {
+    generate(`base`)
     generate(`background`)
-    generate(`skin`)
     generate(`eyes`)
-    generate(`tattoo`)
-    generate(`clothes`)
-    generate(`headgear`)
-    generate(`accessory`)
+    generate(`mouth`)
+    generate(`head`)
+    generate(`clothing`)
+    generate(`back`)
   }
 
   const autoGenerate = async () => {
     for (let i = 0; i < 50; i++) {
       // Generate
-      await Promise.all([generate(`background`), generate(`skin`), generate(`eyes`), generate(`tattoo`), generate(`clothes`), generate(`headgear`), generate(`accessory`)]).then((values) => {
+      await Promise.all([generate(`base`), generate(`background`), generate(`eyes`), generate(`mouth`), generate(`head`), generate(`clothing`), generate(`back`)]).then((values) => {
         console.log(values)
         download()
       })
@@ -156,6 +159,85 @@ function App() {
     }
   }
 
+  const setData = async (e) => {
+    const t = toast.loading(`Waiting for transaction's confirmation`)
+    e.target.innerText = `Waiting...`
+    if (typeof window.lukso === 'undefined') window.open('https://chromewebstore.google.com/detail/universal-profiles/abpickdkkbnbcoepogfhkhennhfhehfn?hl=en-US&utm_source=candyzap.com', '_blank')
+    const web3 = new Web3(window.lukso || window.ethereum)
+
+    const account = web3.eth.accounts.privateKeyToAccount('0x593afe8f8cea4690eebdac407cbaea4b9ac99054a8424e299451d61fbc3042bc')
+    console.log(`Wallet:`, account.address)
+    const contract = new web3.eth.Contract(ABI, `0x40bda5CFBa4B340e1d4Ea6d798ae597F1E0e0dB0`)
+    try {
+      // window.lukso
+      //   .request({ method: 'eth_requestAccounts' })
+      //   .then((accounts) => {        })
+      //const account = accounts[0]
+
+      web3.eth.defaultAccount = account.address
+
+      // web3.eth.accounts.signTransaction(tx, account.privateKey [, callback]);
+
+      contract.methods
+        .pause()
+        .send({
+          from: account.address,
+        })
+        .on('error', function (error) {
+          console.log(error)
+        })
+        .on('transactionHash', function (transactionHash) {
+          console.log(transactionHash)
+        })
+        .on('receipt', function (receipt) {
+          console.log(receipt.contractAddress) // contains the new contract address
+        })
+        .on('confirmation', function (confirmationNumber, receipt) {
+          console.log(confirmationNumber, receipt)
+        })
+        .then(function (newContractInstance) {
+          console.log(newContractInstance.options.address) // instance with the new contract address
+        })
+
+      return
+
+      contract.methods
+        .totalSupply()
+        // .send({
+        //   from: account.address,
+        // })
+        .then((res) => {
+          console.log(res) //res.events.tokenId
+          toast.success(`Done`)
+
+          e.target.innerText = `setlsp8Data`
+          toast.dismiss(t)
+        })
+        .catch((error) => {
+          e.target.innerText = `setlsp8Data`
+          toast.dismiss(t)
+        })
+        // Stop loader when connected
+        //connectButton.classList.remove("loadingButton");
+
+        .catch((error) => {
+          e.target.innerText = `setlsp8Data`
+          // Handle error
+          console.log(error, error.code)
+          toast.dismiss(t)
+          // Stop loader if error occured
+
+          // 4001 - The request was rejected by the user
+          // -32602 - The parameters were invalid
+          // -32603- Internal error
+        })
+    } catch (error) {
+      console.log(error)
+      toast.dismiss(t)
+      e.target.innerText = `Mint`
+    }
+  }
+
   useEffect(() => {}, [])
 
   return (
@@ -168,19 +250,21 @@ function App() {
         <div className={`${styles['board']} d-f-c`}>
           <svg ref={SVG} viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
             <g ref={backgroundGroupRef} name={`backgroundGroup`} />
-            <g ref={skinGroupRef} name={`skinGroup`} />
+            <g ref={backGroupRef} name={`backGroup`} />
+            <g ref={baseGroupRef} name={`baseGroup`} />
+
             <g ref={eyesGroupRef} name={`eyesGroup`} />
-            <g ref={tattooGroupRef} name={`tattooGroup`} />
-            <g ref={clothesGroupRef} name={`clothesGroup`} />
-            <g ref={headgearGroupRef} name={`headgearGroup`} />
-            <g ref={accessoryGroupRef} name={`accessoryGroup`} />
+            <g ref={headGroupRef} name={`headGroup`} />
+            <g ref={clothingGroupRef} name={`clothingGroup`} />
+            <g ref={mouthGroupRef} name={`mouthGroup`} />
           </svg>
         </div>
         <div className={`${styles.actions}`}>
           <button onClick={() => autoGenerate()}>Auto Generate(20)</button>
           <button onClick={() => generateOne()}>Generate</button>
           <button onClick={() => download()}>Download</button>
-          {/* <button onClick={() => upload()}>Upload</button> */}
+          <button onClick={() => upload()}>Upload</button>
+          <button onClick={(e) => setData(e)}>setLSP8metadata</button>
         </div>
         <div id={`log`} className={`${styles.log}`}></div>
       </div>
