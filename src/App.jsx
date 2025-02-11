@@ -255,9 +255,9 @@ function App() {
             <g ref={backGroupRef} name={`backGroup`} />
             <g ref={baseGroupRef} name={`baseGroup`} />
             <g ref={clothingGroupRef} name={`clothingGroup`} />
-            <g ref={eyesGroupRef} name={`eyesGroup`} />
-            <g ref={mouthGroupRef} name={`mouthGroup`} />
             <g ref={headGroupRef} name={`headGroup`} />
+            <g ref={mouthGroupRef} name={`mouthGroup`} />
+            <g ref={eyesGroupRef} name={`eyesGroup`} />
           </svg>
         </div>
         <div className={`${styles.actions}`}>
