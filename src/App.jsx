@@ -249,8 +249,10 @@ function App() {
 
       <div className={`${styles.page}`}>
         Config:
-        <textarea style={{height:`300px`}} className='metadata'
-        defaultValue={`{
+        <textarea
+          style={{ height: `300px` }}
+          className="metadata"
+          defaultValue={`{
   "base": [
     { "name": "none", "weight": 0 },
 
@@ -465,25 +467,26 @@ function App() {
     { "name": "katanas", "weight": 3 }
   ]
 }
-`}>
-        </textarea>
+`}
+        ></textarea>
         <h3 className={``}>LSP8 metadata generator</h3>
-
         <div className={`${styles['board']} d-f-c`}>
           <svg ref={SVG} viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
             <g ref={backgroundGroupRef} name={`backgroundGroup`} />
             <g ref={backGroupRef} name={`backGroup`} />
             <g ref={baseGroupRef} name={`baseGroup`} />
             <g ref={clothingGroupRef} name={`clothingGroup`} />
-            <g ref={headGroupRef} name={`headGroup`} />
-            <g ref={mouthGroupRef} name={`mouthGroup`} />
             <g ref={eyesGroupRef} name={`eyesGroup`} />
+            <g ref={mouthGroupRef} name={`mouthGroup`} />
+            <g ref={headGroupRef} name={`headGroup`} />
           </svg>
         </div>
         <div className={`${styles.actions}`}>
-        <input type="text" name="autogenerate" id="" placeholder='Auto Generate Number'/>
+          <input type="text" name="autogenerate" id="" placeholder="Auto Generate Number" />
           <button onClick={() => autoGenerate()}>Auto Generate</button>
-          <button style={{marginTop:`1rem`}} onClick={() => generateOne()}>Generate</button>
+          <button style={{ marginTop: `1rem` }} onClick={() => generateOne()}>
+            Generate
+          </button>
           <button onClick={() => download()}>Download</button>
           <button onClick={() => upload()}>Upload</button>
           <button onClick={(e) => setData(e)}>setLSP8metadata</button>
