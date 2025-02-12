@@ -12,8 +12,9 @@ const pinata = new PinataSDK({
   pinataGateway: 'example-gateway.mypinata.cloud',
 })
 
+const web3 = new Web3(window.lukso)
+
 function App() {
-  const [showLog, setShowLog] = useState(true)
   const SVG = useRef()
   const baseGroupRef = useRef()
   const backgroundGroupRef = useRef()
@@ -23,7 +24,7 @@ function App() {
   const clothingGroupRef = useRef()
   const backGroupRef = useRef()
   const GATEWAY = `https://ipfs.io/ipfs/`
-  const CID = `bafybeiefmt26oe5keny4doilmxdkjfgpwei6zv4a7yxo3vsztwuorn22oa`
+  const CID = `bafybeihqjtxnlkqwykthnj7idx6ytivmyttjcm4ckuljlkkauh6nm3lzve`
   const BASE_URL = `${GATEWAY}${CID}/` // `http://localhost/luxgenerator/src/assets/pepito-pfp/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or
 
   const weightedRandom = (items) => {
@@ -58,9 +59,6 @@ function App() {
     URL.revokeObjectURL(url)
   }
 
-  const Log = (msg) => {
-    document.querySelector(`#log`).innerHTML += `<p>${msg}</p>`
-  }
 
   const generate = async (trait) => {
     const svgns = 'http://www.w3.org/2000/svg'
@@ -68,8 +66,8 @@ function App() {
     // Clear the board
     // SVG.current.innerHTML = ''
     const Metadata = JSON.parse(document.querySelector(`.metadata`).value)
-    console.log(`${BASE_URL}${trait}/${weightedRandom(Metadata[`${trait}`])}.png`)
-    return await fetch(`${BASE_URL}${trait}/${weightedRandom(Metadata[`${trait}`])}.png`)
+    const randomTrait = weightedRandom(Metadata[`${trait}`])
+    await fetch(`${BASE_URL}${trait}/${randomTrait}.png`)
       .then((response) => response.blob())
       .then((blob) => {
         const reader = new FileReader()
@@ -82,7 +80,7 @@ function App() {
           image.setAttribute('height', 400)
           image.setAttribute('x', 0)
           image.setAttribute('y', 0)
-          showLog && image.addEventListener('load', () => Log(`${trait} has been loaded`))
+        image.addEventListener('load', () => console.log(`${trait} has been loaded`))
 
           // Add to the group
           switch (trait) {
@@ -119,16 +117,82 @@ function App() {
           }
         }
       })
+
+    return randomTrait
+  }
+
+  const generateMetadata = async (base, background, eyes, mouth, head, clothing, back) => {
+    const uploadedCID = await upload()
+    const verifiableUrl = await rAsset(uploadedCID)
+    console.log(uploadedCID)
+    var dataStr =
+      'data:text/json;charset=utf-8,' +
+      encodeURIComponent(
+        JSON.stringify({
+          LSP4Metadata: {
+            name: 'Dracos',
+            description: '',
+            links: [
+              { title: 'Website', url: 'https://' },
+              { title: 'Mint', url: 'https://' },
+              { title: 'Common Ground', url: 'https://' },
+              { title: '𝕏', url: 'https://x.com' },
+              { title: 'Telegram', url: 'https://t.me' },
+            ],
+            attributes: [
+              { key: 'Base', value: base.toUpperCase() },
+              { key: 'Background', value: background.toUpperCase() },
+              { key: 'Eyes', value: eyes.toUpperCase() },
+              { key: 'Mouth', value: mouth.toUpperCase() },
+              { key: 'Head', value: head.toUpperCase() },
+              { key: 'Clothing', value: clothing.toUpperCase() },
+              { key: 'Back', value: back.toUpperCase() },
+            ],
+            icon: [
+              {
+                width: 512,
+                height: 512,
+                url: 'ipfs://bafybeiaziuramvgnceele5wetw5tt65bgp2z63faax7ihvrjd4wlvfsooq',
+                verification: {
+                  method: 'keccak256(bytes)',
+                  data: '0xe99121bbedf99dcf763f1a216ca8cd5847bce15e6930df1e92913c56367f92d1',
+                },
+              },
+            ],
+            backgroundImage: [],
+            assets: [],
+            images: [
+              [
+                {
+                  width: 1000,
+                  height: 1000,
+                  url: `ipfs://${uploadedCID}`,
+                  verification: {
+                    method: 'keccak256(bytes)',
+                    data: web3.utils.keccak256(verifiableUrl),
+                  },
+                },
+              ],
+            ],
+          },
+        })
+      )
+    var dlAnchorElem = document.getElementById('downloadAnchorElem')
+    dlAnchorElem.setAttribute('href', dataStr)
+    dlAnchorElem.setAttribute('download', 'generated-metadata.json')
+    dlAnchorElem.click()
   }
 
   const generateOne = async () => {
-    generate(`base`)
-    generate(`background`)
-    generate(`eyes`)
-    generate(`mouth`)
-    generate(`head`)
-    generate(`clothing`)
-    generate(`back`)
+    const base = await generate(`base`)
+    const background = await generate(`background`)
+    const eyes = await generate(`eyes`)
+    const mouth = await generate(`mouth`)
+    const head = await generate(`head`)
+    const clothing = await generate(`clothing`)
+    const back = await generate(`back`)
+
+    generateMetadata(base, background, eyes, mouth, head, clothing, back)
   }
 
   const autoGenerate = async () => {
@@ -137,6 +201,7 @@ function App() {
       // Generate
       await Promise.all([generate(`base`), generate(`background`), generate(`eyes`), generate(`mouth`), generate(`head`), generate(`clothing`), generate(`back`)]).then((values) => {
         console.log(values)
+        generateMetadata(values[0], values[1], values[2], values[3], values[4], values[5], values[6])
         download()
       })
 
@@ -144,7 +209,13 @@ function App() {
       await new Promise((r) => setTimeout(r, 2000))
     }
   }
+  const rAsset = async (cid) => {
+    const assetBuffer = await fetch(`https://ipfs.io/ipfs/${cid}`).then(async (response) => {
+      return response.arrayBuffer().then((buffer) => new Uint8Array(buffer))
+    })
 
+    return assetBuffer
+  }
   const upload = async () => {
     const htmlStr = document.querySelector(`.${styles['board']} svg`).outerHTML
     const blob = new Blob([htmlStr], { type: 'image/svg+xml' })
@@ -241,16 +312,17 @@ function App() {
     }
   }
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+  }, [])
 
   return (
     <>
       <Toaster />
-
+      <a href="" id="downloadAnchorElem"></a>
       <div className={`${styles.page}`}>
         Config:
         <textarea
-          style={{ height: `300px` }}
+          style={{ height: `100px` }}
           className="metadata"
           defaultValue={`{
   "base": [
@@ -275,8 +347,7 @@ function App() {
     { "name": "zombie", "weight": 15 },
 
     { "name": "alien", "weight": 5 },
-    { "name": "gold", "weight": 5 },
-
+    { "name": "gold", "weight": 5 }
   ],
   "background": [
     { "name": "none", "weight": 0 },
@@ -297,8 +368,7 @@ function App() {
     { "name": "sunset", "weight": 20 },
 
     { "name": "criminal", "weight": 10 },
-    { "name": "pink", "weight": 10 },
-
+    { "name": "pink", "weight": 10 }
   ],
   "eyes": [
     { "name": "none", "weight": 0 },
@@ -317,11 +387,10 @@ function App() {
 
     { "name": "bttf", "weight": 20 },
     { "name": "fire", "weight": 20 },
-    { "name": "tyler_durden", "weight": 20 }
+    { "name": "tyler_durden", "weight": 20 },
 
     { "name": "kano", "weight": 10 },
-    { "name": "laser", "weight": 10 },
-
+    { "name": "laser", "weight": 10 }
   ],
   "mouth": [
     { "name": "none", "weight": 0 },
@@ -343,8 +412,7 @@ function App() {
     { "name": "white_beard", "weight": 20 },
 
     { "name": "fire", "weight": 10 },
-    { "name": "gold_grill", "weight": 10 },
-
+    { "name": "gold_grill", "weight": 10 }
   ],
   "head": [
     { "name": "none", "weight": 30 },
@@ -384,8 +452,7 @@ function App() {
 
     { "name": "crown", "weight": 5 },
     { "name": "halo", "weight": 5 },
-    { "name": "samurai_helmet", "weight": 5 },
-
+    { "name": "samurai_helmet", "weight": 5 }
   ],
   "clothing": [
     { "name": "none", "weight": 10 },
@@ -452,8 +519,7 @@ function App() {
     { "name": "short_circuit", "weight": 5 },
     { "name": "snake", "weight": 5 },
     { "name": "venom", "weight": 5 },
-    { "name": "mystique", "weight": 5 },
-
+    { "name": "mystique", "weight": 5 }
   ],
   "back": [
     { "name": "none", "weight": 65 },
@@ -470,12 +536,13 @@ function App() {
     { "name": "fire_wings", "weight": 7 },
     { "name": "robot_arms", "weight": 7 },
 
-    { "name": "gold_wings", "weight": 3 },
+    { "name": "gold_wings", "weight": 3 }
   ]
-}`}
+}
+`}
         ></textarea>
         <h3 className={``}>LSP8 metadata generator</h3>
-        <div className={`${styles['board']} d-f-c`}>
+        <div className={`${styles['board']} d-f-c card`}>
           <svg ref={SVG} viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
             <g ref={backgroundGroupRef} name={`backgroundGroup`} />
             <g ref={backGroupRef} name={`backGroup`} />
@@ -486,17 +553,16 @@ function App() {
             <g ref={headGroupRef} name={`headGroup`} />
           </svg>
         </div>
-        <div className={`${styles.actions}`}>
+        <div className={`${styles.actions} d-flex`}>
           <input type="text" name="autogenerate" id="" placeholder="Auto Generate Number" />
-          <button onClick={() => autoGenerate()}>Auto Generate</button>
+          <button onClick={() => autoGenerate()}>Auto Generate & download</button>
           <button style={{ marginTop: `1rem` }} onClick={() => generateOne()}>
-            Generate
+            Generate a pfp
           </button>
           <button onClick={() => download()}>Download</button>
           <button onClick={() => upload()}>Upload</button>
           <button onClick={(e) => setData(e)}>setLSP8metadata</button>
         </div>
-        <div id={`log`} className={`${styles.log}`}></div>
       </div>
     </>
   )

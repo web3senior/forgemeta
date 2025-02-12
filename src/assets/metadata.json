@@ -21,8 +21,7 @@
     { "name": "zombie", "weight": 15 },
 
     { "name": "alien", "weight": 5 },
-    { "name": "gold", "weight": 5 },
-
+    { "name": "gold", "weight": 5 }
   ],
   "background": [
     { "name": "none", "weight": 0 },
@@ -43,8 +42,7 @@
     { "name": "sunset", "weight": 20 },
 
     { "name": "criminal", "weight": 10 },
-    { "name": "pink", "weight": 10 },
-
+    { "name": "pink", "weight": 10 }
   ],
   "eyes": [
     { "name": "none", "weight": 0 },
@@ -63,11 +61,10 @@
 
     { "name": "bttf", "weight": 20 },
     { "name": "fire", "weight": 20 },
-    { "name": "tyler_durden", "weight": 20 }
+    { "name": "tyler_durden", "weight": 20 },
 
     { "name": "kano", "weight": 10 },
-    { "name": "laser", "weight": 10 },
-
+    { "name": "laser", "weight": 10 }
   ],
   "mouth": [
     { "name": "none", "weight": 0 },
@@ -89,8 +86,7 @@
     { "name": "white_beard", "weight": 20 },
 
     { "name": "fire", "weight": 10 },
-    { "name": "gold_grill", "weight": 10 },
-
+    { "name": "gold_grill", "weight": 10 }
   ],
   "head": [
     { "name": "none", "weight": 30 },
@@ -130,8 +126,7 @@
 
     { "name": "crown", "weight": 5 },
     { "name": "halo", "weight": 5 },
-    { "name": "samurai_helmet", "weight": 5 },
-
+    { "name": "samurai_helmet", "weight": 5 }
   ],
   "clothing": [
     { "name": "none", "weight": 10 },
@@ -198,8 +193,7 @@
     { "name": "short_circuit", "weight": 5 },
     { "name": "snake", "weight": 5 },
     { "name": "venom", "weight": 5 },
-    { "name": "mystique", "weight": 5 },
-
+    { "name": "mystique", "weight": 5 }
   ],
   "back": [
     { "name": "none", "weight": 65 },
@@ -216,6 +210,6 @@
     { "name": "fire_wings", "weight": 7 },
     { "name": "robot_arms", "weight": 7 },
 
-    { "name": "gold_wings", "weight": 3 },
+    { "name": "gold_wings", "weight": 3 }
   ]
 }
