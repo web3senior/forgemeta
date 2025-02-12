@@ -23,7 +23,7 @@ function App() {
   const clothingGroupRef = useRef()
   const backGroupRef = useRef()
   const GATEWAY = `https://ipfs.io/ipfs/`
-  const CID = `bafybeie4xezei7nw4assxv55522nuiq65mwn2oqssv3cw2klwmwo6oreha`
+  const CID = `bafybeiefmt26oe5keny4doilmxdkjfgpwei6zv4a7yxo3vsztwuorn22oa`
   const BASE_URL = `${GATEWAY}${CID}/` // `http://localhost/luxgenerator/src/assets/pepito-pfp/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or
 
   const weightedRandom = (items) => {
