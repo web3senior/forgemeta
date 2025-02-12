@@ -131,13 +131,14 @@ function App() {
         JSON.stringify({
           LSP4Metadata: {
             name: 'Dracos',
-            description: '',
+            description: `Forged in the molten heart of the Ember Rift, the Dracos are a legendary brood born from the mystical Feralyx Eggs. Each Dragon is infused with the raw power of fire, chaos and untamed greed. Hatched in the infernal chasms of the Rift, these dragons rise as supreme guardians of gold treasure and ancient magic.
+
+Every dragon is an embodiment of power, adorned with unique traits and hoarded relics from civilizations long forgotten. As the eternal keepers of this realm, they are bound to the Ember Rift, where their glory, fury and insatiable hunger for treasure shape the fate of all who dare enter.
+
+🔥 7,777 Dracos: Born from the Rift, Bound by Gold 🪙`,
             links: [
-              { title: 'Website', url: 'https://' },
-              { title: 'Mint', url: 'https://' },
-              { title: 'Common Ground', url: 'https://' },
-              { title: '𝕏', url: 'https://x.com' },
-              { title: 'Telegram', url: 'https://t.me' },
+              { title: 'Mint', url: 'https://universaleverything.io/0x8A985fe01eA908F5697975332260553c454f8F77' },
+              { title: '𝕏', url: 'https://x.com/DracosKodo' },
             ],
             attributes: [
               { key: 'Base', value: base.toUpperCase() },
@@ -182,7 +183,7 @@ function App() {
     dlAnchorElem.setAttribute('download', 'generated-metadata.json')
     dlAnchorElem.click()
   }
-
+  
   const generateOne = async () => {
     const base = await generate(`base`)
     const background = await generate(`background`)
