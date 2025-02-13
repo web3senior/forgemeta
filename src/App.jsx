@@ -59,7 +59,6 @@ function App() {
     URL.revokeObjectURL(url)
   }
 
-
   const generate = async (trait) => {
     const svgns = 'http://www.w3.org/2000/svg'
 
@@ -80,7 +79,7 @@ function App() {
           image.setAttribute('height', 400)
           image.setAttribute('x', 0)
           image.setAttribute('y', 0)
-        image.addEventListener('load', () => console.log(`${trait} has been loaded`))
+          image.addEventListener('load', () => console.log(`${trait} has been loaded`))
 
           // Add to the group
           switch (trait) {
@@ -183,7 +182,7 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     dlAnchorElem.setAttribute('download', 'generated-metadata.json')
     dlAnchorElem.click()
   }
-  
+
   const generateOne = async () => {
     const base = await generate(`base`)
     const background = await generate(`background`)
@@ -193,7 +192,9 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     const clothing = await generate(`clothing`)
     const back = await generate(`back`)
 
-    generateMetadata(base, background, eyes, mouth, head, clothing, back)
+    console.log(`%c Base: ${base} Background: ${background} Eyes: ${eyes} Mouth: ${mouth} Head: ${head} Clothing: ${clothing} Back: ${back}`, 'color:red')
+    //generateMetadata(base, background, eyes, mouth, head, clothing, back)
+    document.querySelector(`#result`).innerHTML=`Base: ${base} Background: ${background} Eyes: ${eyes} Mouth: ${mouth} Head: ${head} Clothing: ${clothing} Back: ${back}`;
   }
 
   const autoGenerate = async () => {
@@ -313,8 +314,7 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     }
   }
 
-  useEffect(() => {
-  }, [])
+  useEffect(() => {}, [])
 
   return (
     <>
@@ -557,6 +557,8 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
         <div className={`${styles.actions} d-flex`}>
           <input type="text" name="autogenerate" id="" placeholder="Auto Generate Number" />
           <button onClick={() => autoGenerate()}>Auto Generate & download</button>
+
+          <div id="result"></div>
           <button style={{ marginTop: `1rem` }} onClick={() => generateOne()}>
             Generate a pfp
           </button>
