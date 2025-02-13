@@ -417,7 +417,7 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     { "name": "gold_grill", "weight": 10 }
   ],
   "head": [
-    { "name": "none", "weight": 50 },
+    { "name": "none", "weight": 60 },
 
     { "name": "arrow", "weight": 20 },
     { "name": "bandana", "weight": 20 },
@@ -523,19 +523,19 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     { "name": "mystique", "weight": 5 }
   ],
   "back": [
-    { "name": "none", "weight": 65 },
+    { "name": "none", "weight": 85 },
 
-    { "name": "medieval_sword", "weight": 15 },
-    { "name": "rpg", "weight": 15 },
-    { "name": "shield", "weight": 15 },
-    { "name": "wings", "weight": 15 },
+    { "name": "medieval_sword", "weight": 10 },
+    { "name": "rpg", "weight": 10 },
+    { "name": "shield", "weight": 10 },
+    { "name": "wings", "weight": 10 },
 
-    { "name": "angel", "weight": 10 },
-    { "name": "devil", "weight": 10 },
-    { "name": "katanas", "weight": 10 },
+    { "name": "angel", "weight": 7 },
+    { "name": "devil", "weight": 7 },
+    { "name": "katanas", "weight": 7 },
 
-    { "name": "fire_wings", "weight": 7 },
-    { "name": "robot_arms", "weight": 7 },
+    { "name": "fire_wings", "weight": 5 },
+    { "name": "robot_arms", "weight": 5 },
 
     { "name": "gold_wings", "weight": 3 }
   ]
