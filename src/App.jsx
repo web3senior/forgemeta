@@ -184,17 +184,18 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
   }
 
   const generateOne = async () => {
-    const base = await generate(`base`)
     const background = await generate(`background`)
+    const back = await generate(`back`)
+    const base = await generate(`base`)
+    const clothing = await generate(`clothing`)
     const eyes = await generate(`eyes`)
     const mouth = await generate(`mouth`)
     const head = await generate(`head`)
-    const clothing = await generate(`clothing`)
-    const back = await generate(`back`)
+  
 
     console.log(`%c Base: ${base} Background: ${background} Eyes: ${eyes} Mouth: ${mouth} Head: ${head} Clothing: ${clothing} Back: ${back}`, 'color:red')
     //generateMetadata(base, background, eyes, mouth, head, clothing, back)
-    document.querySelector(`#result`).innerHTML=`Base: ${base} Background: ${background} Eyes: ${eyes} Mouth: ${mouth} Head: ${head} Clothing: ${clothing} Back: ${back}`;
+    document.querySelector(`#result`).innerHTML=`Base: ${base} | Background: ${background}  | Eyes: ${eyes} |  Mouth: ${mouth}  | Head: ${head}  | Clothing: ${clothing}  | Back: ${back}`;
   }
 
   const autoGenerate = async () => {
