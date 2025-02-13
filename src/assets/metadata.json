@@ -89,7 +89,7 @@
     { "name": "gold_grill", "weight": 10 }
   ],
   "head": [
-    { "name": "none", "weight": 30 },
+    { "name": "none", "weight": 40 },
 
     { "name": "arrow", "weight": 30 },
     { "name": "bandana", "weight": 30 },

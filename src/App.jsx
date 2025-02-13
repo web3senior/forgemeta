@@ -193,9 +193,9 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     const head = await generate(`head`)
   
 
-    console.log(`%c Base: ${base} Background: ${background} Eyes: ${eyes} Mouth: ${mouth} Head: ${head} Clothing: ${clothing} Back: ${back}`, 'color:red')
-    //generateMetadata(base, background, eyes, mouth, head, clothing, back)
     document.querySelector(`#result`).innerHTML=`Base: ${base} | Background: ${background}  | Eyes: ${eyes} |  Mouth: ${mouth}  | Head: ${head}  | Clothing: ${clothing}  | Back: ${back}`;
+
+    generateMetadata(base, background, eyes, mouth, head, clothing, back)
   }
 
   const autoGenerate = async () => {
@@ -417,7 +417,7 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     { "name": "gold_grill", "weight": 10 }
   ],
   "head": [
-    { "name": "none", "weight": 30 },
+    { "name": "none", "weight": 40 },
 
     { "name": "arrow", "weight": 30 },
     { "name": "bandana", "weight": 30 },
