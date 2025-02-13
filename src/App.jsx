@@ -518,7 +518,6 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     { "name": "john_mcclane", "weight": 5 },
     { "name": "samurai_armor", "weight": 5 },
     { "name": "shang_tsung", "weight": 5 },
-    { "name": "short_circuit", "weight": 5 },
     { "name": "snake", "weight": 5 },
     { "name": "venom", "weight": 5 },
     { "name": "mystique", "weight": 5 }
