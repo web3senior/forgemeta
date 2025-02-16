@@ -523,7 +523,7 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     { "name": "mystique", "weight": 5 }
   ],
   "back": [
-    { "name": "none", "weight": 220 },
+    { "name": "none", "weight": 1000 },
 
     { "name": "medieval_sword", "weight": 15 },
     { "name": "rpg", "weight": 15 },
