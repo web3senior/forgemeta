@@ -89,7 +89,7 @@
     { "name": "gold_grill", "weight": 10 }
   ],
   "head": [
-    { "name": "none", "weight": 60 },
+    { "name": "none", "weight": 750 },
 
     { "name": "arrow", "weight": 20 },
     { "name": "bandana", "weight": 20 },
@@ -129,7 +129,7 @@
     { "name": "samurai_helmet", "weight": 5 }
   ],
   "clothing": [
-    { "name": "none", "weight": 10 },
+    { "name": "none", "weight": 200 },
 
     { "name": "aqua_hoodie", "weight": 40 },
     { "name": "bomber_jacket", "weight": 40 },
@@ -195,19 +195,19 @@
     { "name": "mystique", "weight": 5 }
   ],
   "back": [
-    { "name": "none", "weight": 85 },
+    { "name": "none", "weight": 220 },
 
-    { "name": "medieval_sword", "weight": 10 },
-    { "name": "rpg", "weight": 10 },
-    { "name": "shield", "weight": 10 },
-    { "name": "wings", "weight": 10 },
+    { "name": "medieval_sword", "weight": 15 },
+    { "name": "rpg", "weight": 15 },
+    { "name": "shield", "weight": 15 },
+    { "name": "wings", "weight": 15 },
 
-    { "name": "angel", "weight": 7 },
-    { "name": "devil", "weight": 7 },
-    { "name": "katanas", "weight": 7 },
+    { "name": "angel", "weight": 10 },
+    { "name": "devil", "weight": 10 },
+    { "name": "katanas", "weight": 10 },
 
-    { "name": "fire_wings", "weight": 5 },
-    { "name": "robot_arms", "weight": 5 },
+    { "name": "fire_wings", "weight": 7 },
+    { "name": "robot_arms", "weight": 7 },
 
     { "name": "gold_wings", "weight": 3 }
   ]
