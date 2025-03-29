@@ -124,6 +124,8 @@ function App() {
     const uploadedCID = await upload()
     const verifiableUrl = await rAsset(uploadedCID)
     console.log(uploadedCID)
+    console.log(`verifiableUrl:`, verifiableUrl)
+    console.log(web3.utils.keccak256(verifiableUrl))
     var dataStr =
       'data:text/json;charset=utf-8,' +
       encodeURIComponent(
