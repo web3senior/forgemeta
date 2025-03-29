@@ -543,7 +543,7 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
 }
 `}
         ></textarea>
-        <h3 className={``}>LSP8 metadata generator</h3>
+        <h3 className={``}>NFT metadata generator</h3>
         <div className={`${styles['board']} d-f-c card`}>
           <svg ref={SVG} viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
             <g ref={backgroundGroupRef} name={`backgroundGroup`} />
