@@ -193,9 +193,8 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
     const eyes = await generate(`eyes`)
     const mouth = await generate(`mouth`)
     const head = await generate(`head`)
-  
 
-    document.querySelector(`#result`).innerHTML=`Base: ${base} | Background: ${background}  | Eyes: ${eyes} |  Mouth: ${mouth}  | Head: ${head}  | Clothing: ${clothing}  | Back: ${back}`;
+    document.querySelector(`#result`).innerHTML = `Base: ${base} | Background: ${background}  | Eyes: ${eyes} |  Mouth: ${mouth}  | Head: ${head}  | Clothing: ${clothing}  | Back: ${back}`
 
     generateMetadata(base, background, eyes, mouth, head, clothing, back)
   }
@@ -556,17 +555,19 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
             <g ref={headGroupRef} name={`headGroup`} />
           </svg>
         </div>
-        <div className={`${styles.actions} d-flex`}>
+        <div style={{display:`none`}}>
           <input type="text" name="autogenerate" id="" placeholder="Auto Generate Number" />
-          <button onClick={() => autoGenerate()}>Auto Generate & download</button>
 
+          <button onClick={() => autoGenerate()}>Auto Generate & download</button>
+        </div>
+        <div className={`${styles.actions} d-flex`}>
           <div id="result"></div>
-          <button style={{ marginTop: `1rem` }} onClick={() => generateOne()}>
+          <button  onClick={() => generateOne()}>
             Generate a pfp
           </button>
           <button onClick={() => download()}>Download</button>
           <button onClick={() => upload()}>Upload</button>
-          <button onClick={(e) => setData(e)}>setLSP8metadata</button>
+          {/*<button onClick={(e) => setData(e)}>setLSP8metadata</button>*/}
         </div>
       </div>
     </>

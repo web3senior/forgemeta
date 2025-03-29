@@ -2,6 +2,19 @@
 
 **ForgeMeta** is a versatile developer tool designed to simplify the creation of verifiable metadata for any blockchain network. It allows you to generate robust and reliable metadata from JSON data, ensuring data integrity and facilitating interoperability across various blockchain ecosystems.
 
+## Collections used this tool
+We launched a few NFT collection by utilizing this TOOL on LUKSO blockchain.
+
+Here are the links:
+■ Dracos collection
+https://universaleverything.io/collection/0x1fc500c7fdddfaa66510089d6ea14627f5a1a3c6
+
+■ Pepito collection
+https://universal.page/collections/lukso/0x65ddfb908b13a3b85ccb6494eab5602a993f25aa
+
+■ PumpmKing collection
+https://universaleverything.io/collection/0xd80037a7e98255f1df3d529c0f17fb5e9bc453d9
+
 ## Features
 
 * **JSON-based Metadata Generation:** Easily create metadata from your JSON data.

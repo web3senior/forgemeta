@@ -4,6 +4,8 @@
   width: 600px;
   
   button {
+    background-color: antiquewhite;
+    width: 200px;;
     &:active {
       transform: scale(0.9);
     }
@@ -42,10 +44,11 @@
 
 .actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: stretch;
-
+margin-top: 1rem;
+gap:2rem;
   button {
     flex: 100%;
     font-size: 11px;
