@@ -50,12 +50,12 @@ ForgeMeta leverages JavaScript's `fetch()` API for data retrieval and cryptograp
 Contributions are welcome! If you find a bug or have a feature request, please open an issue or submit a pull request.
 
 ## License
+Distributed under the MIT License.
 
-[Your License Here]
 
 ## Contact
 
-[Your Contact Information Here]
+atenyun[at]gmail[dot]com
 
 ## Future Enhancements
 
