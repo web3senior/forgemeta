@@ -16,16 +16,18 @@ const web3 = new Web3(window.lukso)
 
 function App() {
   const SVG = useRef()
-  const baseGroupRef = useRef()
+
+  // Traits ref
   const backgroundGroupRef = useRef()
-  const eyesGroupRef = useRef()
-  const mouthGroupRef = useRef()
+  const bodycolorGroupRef = useRef()
+  const expressionGroupRef = useRef()
+  const bodyGroupRef = useRef()
   const headGroupRef = useRef()
-  const clothingGroupRef = useRef()
-  const backGroupRef = useRef()
+  const extraGroupRef = useRef()
+
   const GATEWAY = `https://ipfs.io/ipfs/`
   const CID = `bafybeihqjtxnlkqwykthnj7idx6ytivmyttjcm4ckuljlkkauh6nm3lzve`
-  const BASE_URL = `${GATEWAY}${CID}/` // `http://localhost/luxgenerator/src/assets/pepito-pfp/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or
+  const BASE_URL = `http://localhost/forgemeta/src/assets/lukseals-collection/level1/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or //`${GATEWAY}${CID}/` //
 
   const weightedRandom = (items) => {
     console.log(items)
@@ -58,6 +60,12 @@ function App() {
     a.remove()
     URL.revokeObjectURL(url)
   }
+  // const background = await generate(`background`)
+  // const bodycolor = await generate(`bodycolor`)
+  // const expression = await generate(`expression`)
+  // const body = await generate(`body`)
+  // const head = await generate(`head`)
+  // const extra = await generate(`extra`)
 
   const generate = async (trait) => {
     const svgns = 'http://www.w3.org/2000/svg'
@@ -83,33 +91,29 @@ function App() {
 
           // Add to the group
           switch (trait) {
-            case `base`:
-              baseGroupRef.current.innerHTML = ''
-              baseGroupRef.current.appendChild(image)
-              break
             case `background`:
               backgroundGroupRef.current.innerHTML = ''
               backgroundGroupRef.current.appendChild(image)
               break
-            case `eyes`:
-              eyesGroupRef.current.innerHTML = ''
-              eyesGroupRef.current.appendChild(image)
+            case `bodycolor`:
+              bodycolorGroupRef.current.innerHTML = ''
+              bodycolorGroupRef.current.appendChild(image)
               break
-            case `mouth`:
-              mouthGroupRef.current.innerHTML = ''
-              mouthGroupRef.current.appendChild(image)
+            case `expression`:
+              expressionGroupRef.current.innerHTML = ''
+              expressionGroupRef.current.appendChild(image)
+              break
+            case `body`:
+              bodyGroupRef.current.innerHTML = ''
+              bodyGroupRef.current.appendChild(image)
               break
             case `head`:
               headGroupRef.current.innerHTML = ''
               headGroupRef.current.appendChild(image)
               break
-            case `clothing`:
-              clothingGroupRef.current.innerHTML = ''
-              clothingGroupRef.current.appendChild(image)
-              break
-            case `back`:
-              backGroupRef.current.innerHTML = ''
-              backGroupRef.current.appendChild(image)
+            case `extra`:
+              extraGroupRef.current.appendChild(image)
+              extraGroupRef.current.innerHTML = ''
               break
             default:
               break
@@ -120,7 +124,7 @@ function App() {
     return randomTrait
   }
 
-  const generateMetadata = async (base, background, eyes, mouth, head, clothing, back) => {
+  const generateMetadata = async (base, background, bodycolor, mouth, head, head1, back) => {
     const uploadedCID = await upload()
     const verifiableUrl = await rAsset(uploadedCID)
     console.log(uploadedCID)
@@ -144,10 +148,10 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
             attributes: [
               { key: 'Base', value: base.toUpperCase() },
               { key: 'Background', value: background.toUpperCase() },
-              { key: 'Eyes', value: eyes.toUpperCase() },
+              { key: 'bodycolor', value: bodycolor.toUpperCase() },
               { key: 'Mouth', value: mouth.toUpperCase() },
               { key: 'Head', value: head.toUpperCase() },
-              { key: 'Clothing', value: clothing.toUpperCase() },
+              { key: 'head', value: head.toUpperCase() },
               { key: 'Back', value: back.toUpperCase() },
             ],
             icon: [
@@ -187,23 +191,22 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
 
   const generateOne = async () => {
     const background = await generate(`background`)
-    const back = await generate(`back`)
-    const base = await generate(`base`)
-    const clothing = await generate(`clothing`)
-    const eyes = await generate(`eyes`)
-    const mouth = await generate(`mouth`)
+    const bodycolor = await generate(`bodycolor`)
+    const expression = await generate(`expression`)
+    const body = await generate(`body`)
     const head = await generate(`head`)
+    const extra = await generate(`extra`)
 
-    document.querySelector(`#result`).innerHTML = `Base: ${base} | Background: ${background}  | Eyes: ${eyes} |  Mouth: ${mouth}  | Head: ${head}  | Clothing: ${clothing}  | Back: ${back}`
+    document.querySelector(`#result`).innerHTML = `Background: ${background}  | bodycolor: ${bodycolor} |  expression: ${expression}  | body: ${body}  | head: ${head}  | extra: ${extra}`
 
-    generateMetadata(base, background, eyes, mouth, head, clothing, back)
+    // generateMetadata(base, background, bodycolor, mouth, head, head, back)
   }
 
   const autoGenerate = async () => {
     const loop_count = document.querySelector(`[name="autogenerate"]`).value
     for (let i = 0; i < loop_count; i++) {
       // Generate
-      await Promise.all([generate(`base`), generate(`background`), generate(`eyes`), generate(`mouth`), generate(`head`), generate(`clothing`), generate(`back`)]).then((values) => {
+      await Promise.all([generate(`base`), generate(`background`), generate(`bodycolor`), generate(`mouth`), generate(`head`), generate(`head`), generate(`back`)]).then((values) => {
         console.log(values)
         generateMetadata(values[0], values[1], values[2], values[3], values[4], values[5], values[6])
         download()
@@ -213,6 +216,7 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
       await new Promise((r) => setTimeout(r, 2000))
     }
   }
+
   const rAsset = async (cid) => {
     const assetBuffer = await fetch(`https://ipfs.io/ipfs/${cid}`).then(async (response) => {
       return response.arrayBuffer().then((buffer) => new Uint8Array(buffer))
@@ -220,6 +224,7 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
 
     return assetBuffer
   }
+
   const upload = async () => {
     const htmlStr = document.querySelector(`.${styles['board']} svg`).outerHTML
     const blob = new Blob([htmlStr], { type: 'image/svg+xml' })
@@ -328,217 +333,107 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
           style={{ height: `100px` }}
           className="metadata"
           defaultValue={`{
-  "base": [
-    { "name": "none", "weight": 0 },
-
-    { "name": "blue", "weight": 50 },
-    { "name": "brown", "weight": 50 },
-    { "name": "green", "weight": 50 },
-    { "name": "grey", "weight": 50 },
-    { "name": "purple", "weight": 50 },
-    { "name": "violet", "weight": 50 },
-    { "name": "yellow_green", "weight": 50 },
-
-    { "name": "black_robot", "weight": 30 },
-    { "name": "crystal", "weight": 30 },
-    { "name": "glitch", "weight": 30 },
-    { "name": "silver_robot", "weight": 30 },
-    { "name": "tatted", "weight": 30 },
-
-    { "name": "reptile", "weight": 15 },
-    { "name": "tiger", "weight": 15 },
-    { "name": "zombie", "weight": 15 },
-
-    { "name": "alien", "weight": 5 },
-    { "name": "gold", "weight": 5 }
-  ],
   "background": [
-    { "name": "none", "weight": 0 },
-
-    { "name": "blue", "weight": 40 },
-    { "name": "gray", "weight": 40 },
-    { "name": "grey", "weight": 40 },
-    { "name": "purple", "weight": 40 },
-    { "name": "red", "weight": 40 },
-
-    { "name": "chartreuse", "weight": 30 },
-    { "name": "electric_blue", "weight": 30 },
-    { "name": "magenta", "weight": 30 },
-    { "name": "orange_peel", "weight": 30 },
-    { "name": "peach", "weight": 30 },
-
-    { "name": "shadow", "weight": 20 },
-    { "name": "sunset", "weight": 20 },
-
-    { "name": "criminal", "weight": 10 },
-    { "name": "pink", "weight": 10 }
+    { "name": "Red", "weight": 20 },
+    { "name": "Yellow", "weight": 20 },
+    { "name": "Gray", "weight": 20 },
+    { "name": "Blue", "weight": 20 },
+    { "name": "Green", "weight": 20 }
   ],
-  "eyes": [
-    { "name": "none", "weight": 0 },
-
-    { "name": "bloodshot", "weight": 40 },
-    { "name": "dragon", "weight": 40 },
-    { "name": "ski_goggles", "weight": 40 },
-    { "name": "sleepy", "weight": 40 },
-    { "name": "sunglasses", "weight": 40 },
-    { "name": "wide", "weight": 40 },
-
-    { "name": "3d_glasses", "weight": 30 },
-    { "name": "birthmark", "weight": 30 },
-    { "name": "visor", "weight": 30 },
-    { "name": "vr_goggles", "weight": 30 },
-
-    { "name": "bttf", "weight": 20 },
-    { "name": "fire", "weight": 20 },
-    { "name": "tyler_durden", "weight": 20 },
-
-    { "name": "kano", "weight": 10 },
-    { "name": "laser", "weight": 10 }
+  "bodycolor": [
+    { "name": "CommonCream", "weight": 80 },
+    { "name": "CommonWhite", "weight": 80 },
+    { "name": "CommonBlue", "weight": 80 },
+    { "name": "CommonGreen", "weight": 80 },
+    { "name": "UncommonPink", "weight": 40 },
+    { "name": "UncommonViolet", "weight": 40 },
+    { "name": "UncommonBlue", "weight": 40 },
+    { "name": "UncommonGreen", "weight": 40 },
+    { "name": "RareGalaxy", "weight": 15 },
+    { "name": "SuperrareSkelleton", "weight": 5 }
   ],
-  "mouth": [
-    { "name": "none", "weight": 0 },
-
-    { "name": "beard", "weight": 40 },
-    { "name": "bubblegum", "weight": 40 },
-    { "name": "closed", "weight": 40 },
-    { "name": "fury", "weight": 40 },
-    { "name": "joint", "weight": 40 },
-    { "name": "sad", "weight": 40 },
-
-    { "name": "rose", "weight": 30 },
-    { "name": "diamond_grill", "weight": 30 },
-    { "name": "pipe", "weight": 30 },
-    { "name": "rainbow_grill", "weight": 30 },
-
-    { "name": "cyber_punk", "weight": 20 },
-    { "name": "hannibal", "weight": 20 },
-    { "name": "white_beard", "weight": 20 },
-
-    { "name": "fire", "weight": 10 },
-    { "name": "gold_grill", "weight": 10 }
+  "expression": [
+    { "name": "Watching", "weight": 20 },
+    { "name": "Normal", "weight": 40 },
+    { "name": "Surprised", "weight": 20 },
+    { "name": "Tired", "weight": 20 },
+    { "name": "Sleepy", "weight": 20 },
+    { "name": "Dirty", "weight": 20 },
+    { "name": "Pasta", "weight": 10 },
+    { "name": "Pizza", "weight": 10 },
+    { "name": "Icecream", "weight": 10 },
+    { "name": "Angry", "weight": 20 },
+    { "name": "Blush", "weight": 20 },
+    { "name": "Lolipop", "weight": 10 }
+  ],
+  "body": [
+    { "name": "WoolBrown", "weight": 10 },
+    { "name": "WoolBeige", "weight": 10 },
+    { "name": "Soldier", "weight": 10 },
+    { "name": "ScarfRed", "weight": 10 },
+    { "name": "ScarfBlue", "weight": 10 },
+    { "name": "Rome", "weight": 10 },
+    { "name": "RainydaysYellow", "weight": 10 },
+    { "name": "RainydaysWhite", "weight": 10 },
+    { "name": "RainydaysBrown", "weight": 10 },
+    { "name": "Puffer", "weight": 10 },
+    { "name": "Pirate", "weight": 10 },
+    { "name": "Painter", "weight": 10 },
+    { "name": "Ninja", "weight": 10 },
+    { "name": "Mexican", "weight": 10 },
+    { "name": "King", "weight": 10 },
+    { "name": "KimonoLove", "weight": 10 },
+    { "name": "KimonoLeaves", "weight": 10 },
+    { "name": "KimonoClouds", "weight": 10 },
+    { "name": "KimonoCitrone", "weight": 10 },
+    { "name": "Jordan", "weight": 10 },
+    { "name": "Inuit", "weight": 10 },
+    { "name": "Indian", "weight": 10 },
+    { "name": "HoodyWhite", "weight": 10 },
+    { "name": "HoodyOrange", "weight": 10 },
+    { "name": "HoodyBlue", "weight": 10 },
+    { "name": "Fireman", "weight": 10 },
+    { "name": "DinoOrange", "weight": 10 },
+    { "name": "DinoGreen", "weight": 10 },
+    { "name": "Dino", "weight": 10 },
+    { "name": "Cowboy", "weight": 10 },
+    { "name": "Cook", "weight": 10 },
+    { "name": "Chain", "weight": 10 },
+    { "name": "Business", "weight": 10 },
+    { "name": "Arab", "weight": 10 },
+    { "name": "AngelWings", "weight": 10 },
+    { "name": "None", "weight": 5 }
   ],
   "head": [
-    { "name": "none", "weight": 750 },
-
-    { "name": "arrow", "weight": 20 },
-    { "name": "bandana", "weight": 20 },
-    { "name": "beanie", "weight": 20 },
-    { "name": "birthday", "weight": 20 },
-    { "name": "cowboy", "weight": 20 },
-    { "name": "festive", "weight": 20 },
-    { "name": "fox_mask", "weight": 20 },
-    { "name": "headphones", "weight": 20 },
-    { "name": "japanese_bandana", "weight": 20 },
-    { "name": "pilot", "weight": 20 },
-    { "name": "prisoner", "weight": 20 },
-    { "name": "rasta", "weight": 20 },
-    { "name": "silver_earring", "weight": 20 },
-    { "name": "trucker_hat", "weight": 20 },
-
-    { "name": "arrow_head", "weight": 15 },
-    { "name": "bowler_hat", "weight": 15 },
-    { "name": "bunny_ears", "weight": 15 },
-    { "name": "devil_mask", "weight": 15 },
-    { "name": "dracuto", "weight": 15 },
-    { "name": "flowers", "weight": 15 },
-    { "name": "frog_mask", "weight": 15 },
-    { "name": "gold_earring", "weight": 15 },
-    { "name": "peaky", "weight": 15 },
-    { "name": "pirate", "weight": 15 },
-
-    { "name": "devil_horns", "weight": 10 },
-    { "name": "metaheads", "weight": 10 },
-    { "name": "mohawk", "weight": 10 },
-    { "name": "raiden", "weight": 10 },
-    { "name": "trump", "weight": 10 },
-    { "name": "unicorn", "weight": 10 },
-
-    { "name": "crown", "weight": 5 },
-    { "name": "halo", "weight": 5 },
-    { "name": "samurai_helmet", "weight": 5 }
+    { "name": "WoolHat", "weight": 10 },
+    { "name": "Sombrero", "weight": 10 },
+    { "name": "SoldierHat", "weight": 10 },
+    { "name": "PirateHat", "weight": 10 },
+    { "name": "NinjaHeadbands", "weight": 10 },
+    { "name": "Laurel", "weight": 10 },
+    { "name": "Indian", "weight": 10 },
+    { "name": "Horns", "weight": 10 },
+    { "name": "Headphones", "weight": 10 },
+    { "name": "Halo", "weight": 10 },
+    { "name": "Hair", "weight": 10 },
+    { "name": "FiremanHelmet", "weight": 10 },
+    { "name": "Durag", "weight": 10 },
+    { "name": "Crown", "weight": 10 },
+    { "name": "CowboyHat", "weight": 10 },
+    { "name": "CookHat", "weight": 10 },
+    { "name": "Cap", "weight": 10 },
+    { "name": "BrownCurly", "weight": 10 },
+    { "name": "BlackCurly", "weight": 10 },
+    { "name": "Beret", "weight": 10 },
+    { "name": "Bearears", "weight": 10 },
+    { "name": "Bandit", "weight": 5 },
+    { "name": "Arab", "weight": 10 },
+    { "name": "None", "weight": 5 }
   ],
-  "clothing": [
-    { "name": "none", "weight": 200 },
-
-    { "name": "aqua_hoodie", "weight": 40 },
-    { "name": "bomber_jacket", "weight": 40 },
-    { "name": "bulletproof_vest", "weight": 40 },
-    { "name": "cowboy", "weight": 40 },
-    { "name": "cyber_punk", "weight": 40 },
-    { "name": "doc", "weight": 40 },
-    { "name": "gigilo", "weight": 40 },
-    { "name": "green_hoodie", "weight": 40 },
-    { "name": "green_shirt", "weight": 40 },
-    { "name": "leather_jacket", "weight": 40 },
-    { "name": "neo", "weight": 40 },
-    { "name": "ninja", "weight": 40 },
-    { "name": "overalls", "weight": 40 },
-    { "name": "purple_hoodie", "weight": 40 },
-    { "name": "red_t", "weight": 40 },
-    { "name": "silver_chain", "weight": 40 },
-    { "name": "skeleton_jacket", "weight": 40 },
-    { "name": "spartan", "weight": 40 },
-    { "name": "squid", "weight": 40 },
-    { "name": "stock_broker", "weight": 40 },
-
-    { "name": "ace", "weight": 30 },
-    { "name": "astro", "weight": 30 },
-    { "name": "beetle", "weight": 30 },
-    { "name": "burned_t", "weight": 30 },
-    { "name": "dress", "weight": 30 },
-    { "name": "dumb", "weight": 30 },
-    { "name": "dumber", "weight": 30 },
-    { "name": "freddy", "weight": 30 },
-    { "name": "fur_coat", "weight": 30 },
-    { "name": "gold_hoodie", "weight": 30 },
-    { "name": "hans", "weight": 30 },
-    { "name": "insane", "weight": 30 },
-    { "name": "lumbergh", "weight": 30 },
-    { "name": "rambo", "weight": 30 },
-    { "name": "red", "weight": 30 },
-    { "name": "robin_hood", "weight": 30 },
-    { "name": "wizerd", "weight": 30 },
-
-    { "name": "barbie", "weight": 15 },
-    { "name": "bateman", "weight": 15 },
-    { "name": "castle", "weight": 15 },
-    { "name": "draku", "weight": 15 },
-    { "name": "godfather", "weight": 15 },
-    { "name": "gold_chain", "weight": 15 },
-    { "name": "homelander", "weight": 15 },
-    { "name": "joker", "weight": 15 },
-    { "name": "kill", "weight": 15 },
-    { "name": "panther", "weight": 15 },
-    { "name": "pink_hoodie", "weight": 15 },
-    { "name": "powers", "weight": 15 },
-    { "name": "ranger", "weight": 15 },
-    { "name": "superhero", "weight": 15 },
-    { "name": "toga", "weight": 15 },
-    { "name": "tyler_durden", "weight": 15 },
-
-    { "name": "john_mcclane", "weight": 5 },
-    { "name": "samurai_armor", "weight": 5 },
-    { "name": "shang_tsung", "weight": 5 },
-    { "name": "snake", "weight": 5 },
-    { "name": "venom", "weight": 5 },
-    { "name": "mystique", "weight": 5 }
-  ],
-  "back": [
-    { "name": "none", "weight": 1000 },
-
-    { "name": "medieval_sword", "weight": 15 },
-    { "name": "rpg", "weight": 15 },
-    { "name": "shield", "weight": 15 },
-    { "name": "wings", "weight": 15 },
-
-    { "name": "angel", "weight": 10 },
-    { "name": "devil", "weight": 10 },
-    { "name": "katanas", "weight": 10 },
-
-    { "name": "fire_wings", "weight": 7 },
-    { "name": "robot_arms", "weight": 7 },
-
-    { "name": "gold_wings", "weight": 3 }
+  "extra": [
+    { "name": "None", "weight": 90 },
+    { "name": "MariaShades", "weight": 5 },
+    { "name": "Shades", "weight": 5 }
   ]
 }
 `}
@@ -547,26 +442,25 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
         <div className={`${styles['board']} d-f-c card`}>
           <svg ref={SVG} viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
             <g ref={backgroundGroupRef} name={`backgroundGroup`} />
-            <g ref={backGroupRef} name={`backGroup`} />
-            <g ref={baseGroupRef} name={`baseGroup`} />
-            <g ref={clothingGroupRef} name={`clothingGroup`} />
-            <g ref={eyesGroupRef} name={`eyesGroup`} />
-            <g ref={mouthGroupRef} name={`mouthGroup`} />
+            <g ref={bodycolorGroupRef} name={`bodycolorGroup`} />
+            <g ref={expressionGroupRef} name={`expressionGroup`} />
+            <g ref={bodyGroupRef} name={`bodyGroup`} />
             <g ref={headGroupRef} name={`headGroup`} />
+            <g ref={extraGroupRef} name={`extraGroup`} />
           </svg>
         </div>
-        <div style={{display:`none`}}>
+        <div style={{ display: `none` }}>
           <input type="text" name="autogenerate" id="" placeholder="Auto Generate Number" />
 
           <button onClick={() => autoGenerate()}>Auto Generate & download</button>
         </div>
-        <div className={`${styles.actions} d-flex`}>
+        <div className={`${styles.actions}`}>
           <div id="result"></div>
-          <button  onClick={() => generateOne()}>
-            Generate a pfp
-          </button>
-          <button onClick={() => download()}>Download</button>
-          <button onClick={() => upload()}>Upload</button>
+          <div className=" d-flex">
+            <button onClick={() => generateOne()}>Generate a pfp</button>
+            <button onClick={() => download()}>Download</button>
+            <button onClick={() => upload()}>Upload</button>
+          </div>
           {/*<button onClick={(e) => setData(e)}>setLSP8metadata</button>*/}
         </div>
       </div>
