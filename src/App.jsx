@@ -27,7 +27,7 @@ function App() {
 
   const GATEWAY = `https://ipfs.io/ipfs/`
   const CID = `bafybeihqjtxnlkqwykthnj7idx6ytivmyttjcm4ckuljlkkauh6nm3lzve`
-  const BASE_URL = `http://localhost/forgemeta/src/assets/lukseals-collection/level1/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or //`${GATEWAY}${CID}/` //
+  const BASE_URL = `./src/assets/lukseals-collection/level1/` //`http://localhost/luxgenerator/src/assets/pepito-pfp/` //`${GATEWAY}${CID}/` // Or //`${GATEWAY}${CID}/` //
 
   const weightedRandom = (items) => {
     console.log(items)
