@@ -67,13 +67,24 @@ function App() {
   // const head = await generate(`head`)
   // const extra = await generate(`extra`)
 
-  const generate = async (trait) => {
+  const generate = async (trait, arg) => {
     const svgns = 'http://www.w3.org/2000/svg'
 
     // Clear the board
     // SVG.current.innerHTML = ''
     const Metadata = JSON.parse(document.querySelector(`.metadata`).value)
-    const randomTrait = weightedRandom(Metadata[`${trait}`])
+    let randomTrait = weightedRandom(Metadata[`${trait}`])
+
+    console.log('============================', randomTrait)
+    // Detect body and prevent loading head on body for lukseal collection
+    if (trait === 'head') {
+      console.log('■■■■■■■■■■■■■■■■■■', arg)
+      const filterBody = ['Dino', 'DinoGreen', 'DinoOrange', 'Inuit']
+      const foundHead = filterBody.find((item) => arg=== item)
+      console.log('============================', foundHead)
+      if (foundHead !== undefined) randomTrait = 'None'
+    }
+
     await fetch(`${BASE_URL}${trait}/${randomTrait}.png`)
       .then((response) => response.blob())
       .then((blob) => {
@@ -87,6 +98,8 @@ function App() {
           image.setAttribute('height', 400)
           image.setAttribute('x', 0)
           image.setAttribute('y', 0)
+          image.setAttribute('trait', randomTrait)
+          image.setAttribute('id', `image${trait}`)
           image.addEventListener('load', () => console.log(`${trait} has been loaded`))
 
           // Add to the group
@@ -190,12 +203,12 @@ Every dragon is an embodiment of power, adorned with unique traits and hoarded r
   }
 
   const generateOne = async () => {
-    const background = await generate(`background`)
-    const bodycolor = await generate(`bodycolor`)
-    const expression = await generate(`expression`)
-    const body = await generate(`body`)
-    const head = await generate(`head`)
-    const extra = await generate(`extra`)
+    const background = await generate(`background`,'')
+    const bodycolor = await generate(`bodycolor`,'')
+    const expression = await generate(`expression`,'')
+    const body = await generate(`body`,'')
+    const head = await generate(`head`, body)
+    const extra = await generate(`extra`,'')
 
     document.querySelector(`#result`).innerHTML = `Background: ${background}  | bodycolor: ${bodycolor} |  expression: ${expression}  | body: ${body}  | head: ${head}  | extra: ${extra}`
 
