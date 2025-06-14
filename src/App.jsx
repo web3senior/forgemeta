@@ -125,8 +125,8 @@ function App() {
               headGroupRef.current.appendChild(image)
               break
             case `extra`:
+               extraGroupRef.current.innerHTML = ''
               extraGroupRef.current.appendChild(image)
-              extraGroupRef.current.innerHTML = ''
               break
             default:
               break
